@@ -1,3 +1,4 @@
+using Areeb.DAL.Data.Seeds;
 using Event_Booking_System.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +17,19 @@ namespace Event_Booking_System
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddScoped<DataSeeding>();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            // Injecting the DataSeeding class to seed the database
+            var scope = app.Services.CreateScope();
+            var DataSeedObject = scope.ServiceProvider.GetRequiredService<DataSeeding>();
+            DataSeedObject.SeedData();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
