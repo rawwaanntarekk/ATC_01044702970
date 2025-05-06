@@ -1,4 +1,6 @@
 using Areeb.DAL.Data.Seeds;
+using Areeb.DAL.Repositories.Implementations;
+using Areeb.DAL.Repositories.Interfaces;
 using Event_Booking_System.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,7 @@ namespace Event_Booking_System
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddScoped<DataSeeding>();
+            builder.Services.AddScoped<IEventRepository, EventRepository>();
 
             builder.Services.AddControllersWithViews();
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Areeb.DAL.Repositories.Implementations
 {
-    internal class EventRepository(ApplicationDbContext applicationDbContext) : IEventRepository
+    public class EventRepository(ApplicationDbContext applicationDbContext) : IEventRepository
     {
         private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
 
