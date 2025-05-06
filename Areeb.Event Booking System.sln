@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event Booking System", "Event Booking System\Event Booking System.csproj", "{14ABA74F-0FEB-41FA-9822-C77A950C10A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Areeb.DAL", "Areeb.DAL\Areeb.DAL.csproj", "{1CFBC07B-2ED2-4F33-B7B6-7B498CDD14F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Areeb.BLL", "Areeb.BLL\Areeb.BLL.csproj", "{2E843B0F-DF76-4139-BB84-3265ABFF1164}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{14ABA74F-0FEB-41FA-9822-C77A950C10A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14ABA74F-0FEB-41FA-9822-C77A950C10A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14ABA74F-0FEB-41FA-9822-C77A950C10A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CFBC07B-2ED2-4F33-B7B6-7B498CDD14F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CFBC07B-2ED2-4F33-B7B6-7B498CDD14F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CFBC07B-2ED2-4F33-B7B6-7B498CDD14F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CFBC07B-2ED2-4F33-B7B6-7B498CDD14F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E843B0F-DF76-4139-BB84-3265ABFF1164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E843B0F-DF76-4139-BB84-3265ABFF1164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E843B0F-DF76-4139-BB84-3265ABFF1164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E843B0F-DF76-4139-BB84-3265ABFF1164}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
