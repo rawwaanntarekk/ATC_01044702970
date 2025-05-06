@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Areeb.DAL.Repositories.Interfaces
 {
-    internal interface IEventRepository
+    public interface IEventRepository
     {
         Task<IEnumerable<Event>> GetAllEventsAsync();
         Task<Event> GetEventByIdAsync(int id);
