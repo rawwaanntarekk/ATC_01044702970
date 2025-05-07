@@ -1,4 +1,5 @@
-﻿using Areeb.DAL.Data.Configurations;
+﻿using Areeb.DAL;
+using Areeb.DAL.Data.Configurations;
 using Areeb.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace Event_Booking_System.Data
         }
 
         public DbSet<Event> Events { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

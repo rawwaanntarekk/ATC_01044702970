@@ -9,11 +9,11 @@ namespace Areeb.DAL.Repositories.Implementations
     {
         private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
 
-        public async Task<IEnumerable<Event>> GetAllEventsAsync() => await _applicationDbContext.Events.ToListAsync();
+        public async Task<IEnumerable<Event>> GetAllEventsAsync() => await _applicationDbContext.Events.Include(e => e.Bookings).ToListAsync();
 
         public async Task<Event> GetEventByIdAsync(int id)
         {
-            var eventEntity = await _applicationDbContext.Events.FirstOrDefaultAsync(e => e.Id == id);
+            var eventEntity = await _applicationDbContext.Events.Include(e => e.Bookings).FirstOrDefaultAsync(e => e.Id == id);
             return eventEntity ?? throw new Exception($"Event with ID {id} not found.");
         }
 

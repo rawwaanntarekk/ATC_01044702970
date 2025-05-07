@@ -16,6 +16,7 @@
                 <th>@Html.DisplayNameFor(e => e.EndDate)</th>
                 <th>@Html.DisplayNameFor(e => e.Location)</th>
                 <th>@Html.DisplayNameFor(e => e.Price)</th>
+                <th>@Html.DisplayNameFor(e => e.TicketsAvailable)</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -30,6 +31,7 @@
                     <td>@DateOnly.FromDateTime(eventItem.EndDate)</td>
                     <td>@eventItem.Location</td>
                     <td>@eventItem.Price.ToString("C")</td>
+                    <td>@eventItem.TicketsAvailable</td>
                     <td>
                         <a asp-action="Details" asp-route-id="@eventItem.Id" class="btn btn-outline-primary me-2">Details</a>
                         <a asp-action="Edit" asp-route-id="@eventItem.Id" class="btn btn-outline-success">Book Now</a>                   
