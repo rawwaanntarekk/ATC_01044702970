@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Event>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">All Events</h1>
+<hr class="w-25 m-auto" />
+
+@if(Model.Any()){
+    <table class="table table-striped table-hover my-3">
+        <thead class="text-center">
+            <tr>
+                <th>@Html.DisplayNameFor(e => e.Name)</th>
+                <th>@Html.DisplayNameFor(e => e.Description)</th>
+                <th>@Html.DisplayNameFor(e => e.StartDate)</th>
+                <th>@Html.DisplayNameFor(e => e.EndDate)</th>
+                <th>@Html.DisplayNameFor(e => e.Location)</th>
+                <th>@Html.DisplayNameFor(e => e.Price)</th>
+                <th>@Html.DisplayNameFor(e => e.TicketsAvailable)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody class="text-center">
+            @foreach (var eventItem in Model)
+            {
+                <tr class="py-5">
+                    <td>@eventItem.Name</td>
+                    <td>@eventItem.Description</td>
+                    <td>@DateOnly.FromDateTime(eventItem.StartDate)</td>
+                    <td>@DateOnly.FromDateTime(eventItem.EndDate)</td>
+                    <td>@eventItem.Location</td>
+                    <td>@eventItem.Price.ToString("C")</td>
+                    <td>@eventItem.TicketsAvailable</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@eventItem.Id" class="btn btn-outline-primary me-2">Details</a>
+                        <a asp-action="Edit" asp-route-id="@eventItem.Id" class="btn btn-outline-success">Book Now</a>                   
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="alert alert-warning">No events available.</p>
+}
+
