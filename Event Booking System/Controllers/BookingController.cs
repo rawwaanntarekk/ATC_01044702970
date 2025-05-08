@@ -52,7 +52,7 @@ public class BookingController : Controller
 
         try
         {
-            await _bookingService.Book(model.EventId, userName, model.Quantity);
+            await _bookingService.Book(model.EventId, userName!, model.Quantity);
             TempData["SuccessMessage"] = "Booking created successfully!";
         }
         catch (Exception ex)

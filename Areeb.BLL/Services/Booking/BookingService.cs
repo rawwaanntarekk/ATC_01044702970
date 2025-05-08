@@ -1,4 +1,5 @@
-﻿using Areeb.DAL;
+﻿using Areeb.BLL.Services.Mail;
+using Areeb.DAL;
 using Areeb.DAL.Entities;
 using Areeb.DAL.Repositories.Interfaces;
 using System;
@@ -13,11 +14,13 @@ namespace Areeb.BLL
     {
         private readonly IGenericRepository<Booking> _bookingRepository;
         private readonly IGenericRepository<Event> _eventRepository;
+        private readonly BookingMailService _bookingMailService;
 
-        public BookingService(IGenericRepository<Booking> BookingRepository, IGenericRepository<Event> eventRepository)
+        public BookingService(IGenericRepository<Booking> BookingRepository, IGenericRepository<Event> eventRepository, BookingMailService bookingMailService)
         {
             _eventRepository = eventRepository;
             _bookingRepository = BookingRepository;
+            _bookingMailService = bookingMailService;
         }
         public async Task Book(int eventId, string username, int quantity)
         {
@@ -39,10 +42,9 @@ namespace Areeb.BLL
             //3. Adding the booking to the database
             await _bookingRepository.AddAsync(booking);
 
-
-
-
-
+            // 4. Send a confirmation mail to the user
+            var userMail = username + "@gmail.com";
+            await _bookingMailService.SendBookingConfirmationAsync(userMail, eventToBook.Name, eventToBook.StartDate.ToString());
 
 
         }

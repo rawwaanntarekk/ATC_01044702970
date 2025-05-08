@@ -1,4 +1,5 @@
 using Areeb.BLL;
+using Areeb.BLL.Services.Mail;
 using Areeb.DAL;
 using Areeb.DAL.Data.Seeds;
 using Areeb.DAL.Entities;
@@ -30,6 +31,10 @@ namespace Event_Booking_System
             builder.Services.AddScoped<IGenericRepository<Event>, EventRepository>();
             builder.Services.AddScoped<IGenericRepository<Booking>, BookingRepository>();
             builder.Services.AddScoped<IBookingService , BookingService>();
+            builder.Services.AddScoped<BookingMailService>();
+            builder.Services.AddScoped<EmailTemplateService>();
+            // Register Configuration service
+            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
             builder.Services.AddControllersWithViews();
 
