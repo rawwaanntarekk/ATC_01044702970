@@ -1,4 +1,7 @@
+using Areeb.BLL;
+using Areeb.DAL;
 using Areeb.DAL.Data.Seeds;
+using Areeb.DAL.Entities;
 using Areeb.DAL.Repositories.Implementations;
 using Areeb.DAL.Repositories.Interfaces;
 using Event_Booking_System.Data;
@@ -23,7 +26,10 @@ namespace Event_Booking_System
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddScoped<DataSeeding>();
-            builder.Services.AddScoped<IEventRepository, EventRepository>();
+            builder.Services.AddScoped<EventRepository>();
+            builder.Services.AddScoped<IGenericRepository<Event>, EventRepository>();
+            builder.Services.AddScoped<IGenericRepository<Booking>, BookingRepository>();
+            builder.Services.AddScoped<IBookingService , BookingService>();
 
             builder.Services.AddControllersWithViews();
 
