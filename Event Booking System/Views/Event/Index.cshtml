@@ -34,7 +34,7 @@
                     <td>@eventItem.TicketsAvailable</td>
                     <td>
                         <a asp-action="Details" asp-route-id="@eventItem.Id" class="btn btn-outline-primary me-2">Details</a>
-                        <a asp-action="Edit" asp-route-id="@eventItem.Id" class="btn btn-outline-success">Book Now</a>                   
+                        <a asp-controller="Booking" asp-action="Create" asp-route-id="@eventItem.Id" class="btn btn-outline-success">Book Now</a>                   
                 </tr>
             }
         </tbody>
