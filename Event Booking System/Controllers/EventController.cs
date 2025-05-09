@@ -1,15 +1,32 @@
-﻿using Areeb.DAL.Entities;
+﻿using Areeb.DAL;
+using Areeb.DAL.Entities;
 using Areeb.DAL.Repositories.Interfaces;
+using Event_Booking_System.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Event_Booking_System.Controllers
 {
-    public class EventController(IGenericRepository<Event> _eventRepository) : Controller
+    public class EventController(IGenericRepository<Event> _eventRepository , IGenericRepository<Booking> _bookingRepository) : Controller
     {
         public async Task<IActionResult> Index()
         {
             var events = await _eventRepository.GetAllAsync();
-            return View(events);
+
+            var userBookings = await _bookingRepository.GetAllAsync();
+            userBookings = userBookings.Where(b => b.CustomerName == User.Identity!.Name).ToList();
+
+            var eventViewModels = events.Select(e => new EventViewModel
+            {
+                Id = e.Id,
+                Name = e.Name,
+                Location = e.Location,
+                Price = e.Price,
+                StartDate = e.StartDate,
+                TicketsAvailable = e.TicketsAvailable,
+                IsBookedByUser = userBookings.Any(b => b.EventId == e.Id && b.IsPaid)
+            });
+
+            return View(eventViewModels);
         }
 
         public async Task<IActionResult> Details(int id)
