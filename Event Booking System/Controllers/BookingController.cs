@@ -41,10 +41,6 @@ public class BookingController : Controller
         if (!ModelState.IsValid)
         {
             var eventEntity = await _eventRepository.GetByIdAsync(model.EventId);
-            if (eventEntity == null)
-            {
-                return NotFound();
-            }
             return View(model);
         }
 
@@ -53,20 +49,14 @@ public class BookingController : Controller
         try
         {
             await _bookingService.Book(model.EventId, userName!, model.Quantity);
-            TempData["SuccessMessage"] = "Booking created successfully!";
         }
         catch (Exception ex)
         {
             ModelState.AddModelError("", ex.Message);
-            var eventEntity = await _eventRepository.GetByIdAsync(model.EventId);
-            if (eventEntity == null)
-            {
-                return NotFound();
-            }
-            model.EventName = eventEntity.Name; 
             return View(model);
         }
 
-        return RedirectToAction("Index", "Event"); 
+        return View("CongratulationsView", model.EventName);
+
     }
 }
