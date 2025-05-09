@@ -16,7 +16,7 @@ namespace Areeb.DAL.Entities
         public string Location { get; set; }
         public decimal Price { get; set; }
         public int Capacity { get; set; }
-        public IEnumerable<Booking> Bookings { get; set; }
+        public ICollection<Booking> Bookings { get; set; }
         public int TicketsAvailable => Capacity - Bookings.Where(b => b.IsPaid).Sum(b => b.Quantity);
         public DateTime CreatedAt { get; set; } 
         public DateTime UpdatedAt { get; set; }
