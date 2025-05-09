@@ -1,0 +1,83 @@
+﻿@model Event
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+@* Can be enhanced as Ui *@
+
+<div class="container py-4">
+    <div class="card shadow">
+        <div class="card">
+            <h1 class="text-center  mb-0">@Model.Name</h1>
+        </div>
+
+        <div class="card-body">
+            <section class="mb-3">
+                <h2 class="h4 border-bottom pb-2">Event Overview</h2>
+                <p class="lead text-muted">@Model.Description</p>
+            </section>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">@Html.DisplayNameFor( e => e.Location)</h3>
+                            <p class="card-text">@Model.Location</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">@Html.DisplayNameFor(e => e.Price)</h3>
+                            <p class="card-text fw-bold">@Model.Price.ToString("C")</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">@Html.DisplayNameFor(e => e.StartDate)</h3>
+                            <p class="card-text">@Model.StartDate.ToString("MMMM dd, yyyy h:mm tt")</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">@Html.DisplayNameFor(e => e.EndDate)</h3>
+                            <p class="card-text">@Model.EndDate.ToString("MMMM dd, yyyy h:mm tt")</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">Maximum Attendance</h3>
+                            <p class="card-text">@Model.Capacity persons</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">Remaining Tickets</h3>
+                            <p class="card-text fw-bold">@Model.TicketsAvailable</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="py-2 m-auto">
+            <a class="btn btn-dark px-3 py-2" asp-action="Index"> Back To List</a>
+        </div>
+    </div>
+</div>
