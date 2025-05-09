@@ -39,10 +39,7 @@ public class BookingController : Controller
     public async Task<IActionResult> Create(CreateBookingViewModel model)
     {
         if (!ModelState.IsValid)
-        {
-            var eventEntity = await _eventRepository.GetByIdAsync(model.EventId);
             return View(model);
-        }
 
         var userName = User?.Identity?.Name;
 
