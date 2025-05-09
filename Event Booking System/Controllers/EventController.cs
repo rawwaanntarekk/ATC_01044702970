@@ -11,5 +11,14 @@ namespace Event_Booking_System.Controllers
             var events = await _eventRepository.GetAllAsync();
             return View(events);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var eventDetails = await _eventRepository.GetByIdAsync(id);
+            if (eventDetails == null)
+                return NotFound();
+
+            return View(eventDetails);
+        }
     }
 }
