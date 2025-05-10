@@ -31,11 +31,16 @@ namespace Areeb.DAL.Repositories.Implementations
         {
             var existingBooking = _applicationDbContext.Bookings.FirstOrDefault(b => b.Id == booking.Id) ?? throw new Exception($"Booking with ID {booking.Id} not found.");
             _applicationDbContext.Update(booking);
+            _applicationDbContext.SaveChanges();
+
         }
         public void Delete(int id)
         {
             var booking = _applicationDbContext.Bookings.FirstOrDefault(b => b.Id == id) ?? throw new Exception($"Booking with ID {id} not found.");
             _applicationDbContext.Bookings.Remove(booking);
+            _applicationDbContext.SaveChanges();
+
+
         }
 
 

@@ -15,16 +15,22 @@ namespace Event_Booking_System.Controllers
             var userBookings = await _bookingRepository.GetAllAsync();
             userBookings = userBookings.Where(b => b.CustomerName == User.Identity!.Name).ToList();
 
-            var eventViewModels = events.Select(e => new EventViewModel
+            var eventViewModels = events.Select(e =>
             {
-                Id = e.Id,
-                Name = e.Name,
-                Location = e.Location,
-                Price = e.Price,
-                StartDate = e.StartDate,
-                TicketsAvailable = e.TicketsAvailable,
-                IsBookedByUser = userBookings.Any(b => b.EventId == e.Id && b.IsPaid)
-            });
+                var userBooking = userBookings.FirstOrDefault(b => b.EventId == e.Id );
+
+                return new EventViewModel
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    Location = e.Location,
+                    IsBookedByUser = userBooking != null,
+                    BookingId = (userBooking?.Id) ?? 0, 
+                    Price = e.Price,
+                    StartDate = e.StartDate,
+                    TicketsAvailable = e.TicketsAvailable
+                };
+            }).ToList();
 
             return View(eventViewModels);
         }

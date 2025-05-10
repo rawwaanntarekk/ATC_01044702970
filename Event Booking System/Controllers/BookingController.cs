@@ -54,6 +54,28 @@ public class BookingController : Controller
         }
 
         return View("CongratulationsView", model.EventName);
+    }
 
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var booking = await _bookingService.GetBookingById(id);
+        return View(booking);
+
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        try
+        {
+            await _bookingService.CancelBooking(id);
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", ex.Message);
+            return View();
+        }
+        return RedirectToAction("Index", "Event");
     }
 }
