@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Event>
+﻿@model IEnumerable<EventViewModel>
 @{
     ViewData["Title"] = "Index";
 }
@@ -28,7 +28,7 @@
                             </p>
                             <div class="d-flex justify-content-between mt-3">
                                 <a asp-action="Details" asp-route-id="@eventItem.Id" class="btn btn-outline-primary">Details</a>
-                                <a asp-controller="Booking" asp-action="Create" asp-route-id="@eventItem.Id" class="btn btn-outline-success">Book Now</a>
+                                <a asp-controller="Booking" asp-action="@(eventItem.IsBookedByUser ? "Delete" : "Create")" asp-route-id="@(eventItem.IsBookedByUser ? eventItem.BookingId : eventItem.Id)" class="btn @(eventItem.IsBookedByUser ? "btn-outline-danger" : "btn-outline-success")"> @(eventItem.IsBookedByUser ? "Cancel Booking" : "Book Now")</a>
                             </div>
                         </div>
                     </div>
