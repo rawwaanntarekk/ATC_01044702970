@@ -49,7 +49,20 @@ namespace Areeb.BLL
 
         }
 
-        public Task CancelBooking(int bookingId)
+        public async Task<Booking> GetBookingById(int bookingId)
+        {
+            var booking = await _bookingRepository.GetByIdAsync(bookingId);
+            return booking ?? throw new Exception("Booking not found.");
+        }
+
+        public async Task CancelBooking(int bookingId)
+        {
+            var booking = await _bookingRepository.GetByIdAsync(bookingId) ?? throw new Exception("Booking not found.");
+            _bookingRepository.Delete(bookingId);
+        }
+
+
+        public Task<List<Booking>> GetBookingsByUser(string username)
         {
             throw new NotImplementedException();
         }

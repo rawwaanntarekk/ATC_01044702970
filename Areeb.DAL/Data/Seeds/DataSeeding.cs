@@ -15,13 +15,13 @@ namespace Areeb.DAL.Data.Seeds
                 _applicationDbContext.Database.Migrate();
             }
 
-            _applicationDbContext.Events.RemoveRange(_applicationDbContext.Events);
-            _applicationDbContext.Bookings.RemoveRange(_applicationDbContext.Bookings);
+            //_applicationDbContext.Events.RemoveRange(_applicationDbContext.Events);
+            //_applicationDbContext.Bookings.RemoveRange(_applicationDbContext.Bookings);
 
-            _applicationDbContext.SaveChanges();
+            //_applicationDbContext.SaveChanges();
 
-            _applicationDbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Events', RESEED, 0)");
-            _applicationDbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Bookings', RESEED, 0)");
+            //_applicationDbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Events', RESEED, 0)");
+            //_applicationDbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Bookings', RESEED, 0)");
 
             if (!_applicationDbContext.Events.Any())
             {
@@ -81,49 +81,49 @@ namespace Areeb.DAL.Data.Seeds
 
 
 
-            if (!_applicationDbContext.Bookings.Any())
-            {
-                var bookings = new List<Booking>
-                {
-                    new() {
-                        EventId = 1,
-                        CustomerName = "John Doe",
-                        Quantity = 2,
-                        BookingDate = DateTime.Now,
-                        IsPaid = true
-                    },
-                    new() {
-                        EventId = 2,
-                        CustomerName = "Jane Smith",
-                        Quantity = 4,
-                        BookingDate = DateTime.Now,
-                        IsPaid = false
-                    },
-                    new() {
-                        EventId = 3,
-                        CustomerName = "Alice Johnson",
-                        Quantity = 1,
-                        BookingDate = DateTime.Now,
-                        IsPaid = true
-                    },
-                    new() {
-                        EventId = 4,
-                        CustomerName = "Bob Brown",
-                        Quantity = 3,
-                        BookingDate = DateTime.Now,
-                        IsPaid = false
-                    },
-                    new() {
-                        EventId = 5,
-                        CustomerName = "Charlie Davis",
-                        Quantity = 5,
-                        BookingDate = DateTime.Now,
-                        IsPaid = true
-                    }
-                };
-                _applicationDbContext.Bookings.AddRange(bookings);
-                _applicationDbContext.SaveChanges();
-            }
+            //if (!_applicationDbContext.Bookings.Any())
+            //{
+            //    var bookings = new List<Booking>
+            //    {
+            //        new() {
+            //            EventId = 1,
+            //            CustomerName = "John Doe",
+            //            Quantity = 2,
+            //            BookingDate = DateTime.Now,
+            //            IsPaid = true
+            //        },
+            //        new() {
+            //            EventId = 2,
+            //            CustomerName = "Jane Smith",
+            //            Quantity = 4,
+            //            BookingDate = DateTime.Now,
+            //            IsPaid = false
+            //        },
+            //        new() {
+            //            EventId = 3,
+            //            CustomerName = "Alice Johnson",
+            //            Quantity = 1,
+            //            BookingDate = DateTime.Now,
+            //            IsPaid = true
+            //        },
+            //        new() {
+            //            EventId = 4,
+            //            CustomerName = "Bob Brown",
+            //            Quantity = 3,
+            //            BookingDate = DateTime.Now,
+            //            IsPaid = false
+            //        },
+            //        new() {
+            //            EventId = 5,
+            //            CustomerName = "Charlie Davis",
+            //            Quantity = 5,
+            //            BookingDate = DateTime.Now,
+            //            IsPaid = true
+            //        }
+            //    };
+            //    _applicationDbContext.Bookings.AddRange(bookings);
+            //    _applicationDbContext.SaveChanges();
+            //}
 
 
         }
