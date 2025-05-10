@@ -33,6 +33,7 @@ namespace Event_Booking_System
             builder.Services.AddScoped<IBookingService , BookingService>();
             builder.Services.AddScoped<BookingMailService>();
             builder.Services.AddScoped<EmailTemplateService>();
+            
             // Register Configuration service
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
@@ -63,6 +64,24 @@ namespace Event_Booking_System
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/" && !context.User.Identity!.IsAuthenticated)
+                {
+                    context.Response.Redirect("/Identity/Account/Login");
+                    return;
+                }
+                else if (context.Request.Path == "/" && context.User.Identity!.IsAuthenticated)
+                {
+                    context.Response.Redirect("/Home/Index");
+                    return;
+                }
+
+                await next();
+            });
+
+
 
             app.MapControllerRoute(
                 name: "default",
