@@ -3,9 +3,11 @@ using Areeb.DAL.Entities;
 using Areeb.DAL.Repositories.Implementations;
 using Areeb.DAL.Repositories.Interfaces;
 using Event_Booking_System.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
+[Authorize(Roles = "Admin,User")]
 public class BookingController : Controller
 {
     private readonly IGenericRepository<Event> _eventRepository;

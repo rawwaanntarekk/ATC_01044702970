@@ -128,8 +128,7 @@ namespace Event_Booking_System.Areas.Identity.Pages.Account
                         return RedirectToAction("IdentityIndex", "Home");
                     else
                     {
-                        // Any user who is not an admin will be assigned to the User role
-                        await _userManager.AddToRoleAsync(user, "User");
+                       
                         return LocalRedirect(returnUrl);
                     }
                 }
