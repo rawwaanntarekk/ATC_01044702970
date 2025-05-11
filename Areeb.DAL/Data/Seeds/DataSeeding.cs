@@ -1,13 +1,17 @@
 ﻿using Areeb.DAL.Entities;
 using Event_Booking_System.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Areeb.DAL.Data.Seeds
 {
-    public class DataSeeding(ApplicationDbContext _applicationDbContext)
+    public class DataSeeding(ApplicationDbContext applicationDbContext,
+                       UserManager<IdentityUser> userManager)
     {
+        private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
+        private readonly UserManager<IdentityUser> _userManager = userManager;
 
-        public void SeedData()
+        public async Task SeedData()
         {
             // Checking if there are any pending migrations, migrating if any are found
             if (_applicationDbContext.Database.GetPendingMigrations().Any())
@@ -79,53 +83,47 @@ namespace Areeb.DAL.Data.Seeds
                 _applicationDbContext.SaveChanges();
             }
 
+            if (!_applicationDbContext.Roles.Any())
+            {
+                var roles = new List<IdentityRole>
+                {
+                    new() { Name = "Admin", NormalizedName = "ADMIN" },
+                    new() { Name = "User", NormalizedName = "USER" }
+                };
+                _applicationDbContext.Roles.AddRange(roles);
+                _applicationDbContext.SaveChanges();
+            }
 
 
-            //if (!_applicationDbContext.Bookings.Any())
-            //{
-            //    var bookings = new List<Booking>
-            //    {
-            //        new() {
-            //            EventId = 1,
-            //            CustomerName = "John Doe",
-            //            Quantity = 2,
-            //            BookingDate = DateTime.Now,
-            //            IsPaid = true
-            //        },
-            //        new() {
-            //            EventId = 2,
-            //            CustomerName = "Jane Smith",
-            //            Quantity = 4,
-            //            BookingDate = DateTime.Now,
-            //            IsPaid = false
-            //        },
-            //        new() {
-            //            EventId = 3,
-            //            CustomerName = "Alice Johnson",
-            //            Quantity = 1,
-            //            BookingDate = DateTime.Now,
-            //            IsPaid = true
-            //        },
-            //        new() {
-            //            EventId = 4,
-            //            CustomerName = "Bob Brown",
-            //            Quantity = 3,
-            //            BookingDate = DateTime.Now,
-            //            IsPaid = false
-            //        },
-            //        new() {
-            //            EventId = 5,
-            //            CustomerName = "Charlie Davis",
-            //            Quantity = 5,
-            //            BookingDate = DateTime.Now,
-            //            IsPaid = true
-            //        }
-            //    };
-            //    _applicationDbContext.Bookings.AddRange(bookings);
-            //    _applicationDbContext.SaveChanges();
-            //}
+            string adminEmail = "eng.rawantarek21@gmail.com";
+            string adminPassword = "Areeb@1234";
 
+            var adminUser = await _userManager.FindByEmailAsync(adminEmail);
 
+            if (adminUser == null)
+            {
+                adminUser = new IdentityUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    EmailConfirmed = true
+                };
+
+                var result = await _userManager.CreateAsync(adminUser, adminPassword);
+
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        Console.WriteLine($"Error creating admin: {error.Description}");
+                    }
+
+                }
+            }
         }
     }
 }

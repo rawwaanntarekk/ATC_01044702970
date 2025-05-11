@@ -23,8 +23,10 @@ namespace Event_Booking_System
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>()
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddRazorPages();
 
             builder.Services.AddScoped<DataSeeding>();
             builder.Services.AddScoped<EventRepository>();
@@ -33,6 +35,7 @@ namespace Event_Booking_System
             builder.Services.AddScoped<IBookingService , BookingService>();
             builder.Services.AddScoped<BookingMailService>();
             builder.Services.AddScoped<EmailTemplateService>();
+
             
             // Register Configuration service
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
