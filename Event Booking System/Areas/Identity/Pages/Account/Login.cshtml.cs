@@ -101,7 +101,7 @@ namespace Event_Booking_System.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(  [FromServices] UserManager<IdentityUser> _userManager , string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync([FromServices] UserManager<IdentityUser> _userManager, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
 
@@ -111,14 +111,19 @@ namespace Event_Booking_System.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                var username = new EmailAddressAttribute().IsValid(Input.Email) ? user.UserName : Input.Email;
+                var result = await _signInManager.PasswordSignInAsync(username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
-                var username = new EmailAddressAttribute().IsValid(Input.Email) ? _userManager.FindByEmailAsync(Input.Email).Result?.UserName : Input.Email; 
-                var result = await _signInManager.PasswordSignInAsync(username, Input.Password, Input.RememberMe, lockoutOnFailure: false );
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                        return RedirectToAction("IdentityIndex", "Home");
+                    else
+                        return LocalRedirect(returnUrl);
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
