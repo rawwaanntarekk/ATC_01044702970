@@ -49,14 +49,22 @@
                         <a class="nav-link" asp-controller="User" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Users
+                        </a> 
+                        
+                        <a class="nav-link" asp-controller="Event" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
+                            Events
                         </a>
+
+
 
 
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Start Bootstrap
+                    @User.Identity!.Name
+                    
                 </div>
             </nav>
         </div>
