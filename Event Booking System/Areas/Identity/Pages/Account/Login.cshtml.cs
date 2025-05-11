@@ -111,9 +111,15 @@ namespace Event_Booking_System.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+
+                bool validEmail = new EmailAddressAttribute().IsValid(Input.Email);
+
+                if (!validEmail)
+                    Input.Email = Input.Email + "@gmail.com";
+
+                // Holding the user to assign to him/her the role
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                var username = new EmailAddressAttribute().IsValid(Input.Email) ? user.UserName : Input.Email;
-                var result = await _signInManager.PasswordSignInAsync(username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
@@ -121,7 +127,11 @@ namespace Event_Booking_System.Areas.Identity.Pages.Account
                     if (await _userManager.IsInRoleAsync(user, "Admin"))
                         return RedirectToAction("IdentityIndex", "Home");
                     else
+                    {
+                        // Any user who is not an admin will be assigned to the User role
+                        await _userManager.AddToRoleAsync(user, "User");
                         return LocalRedirect(returnUrl);
+                    }
                 }
 
                 if (result.RequiresTwoFactor)
