@@ -2,6 +2,7 @@
 using Areeb.DAL.Entities;
 using Areeb.DAL.Repositories.Interfaces;
 using Event_Booking_System.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Event_Booking_System.Controllers
@@ -42,6 +43,37 @@ namespace Event_Booking_System.Controllers
                 return NotFound();
 
             return View(eventDetails);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateEventViewModel eventModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Event CreatedEvent = new()
+                {
+                    Name = eventModel.Name,
+                    Description = eventModel.Description,
+                    StartDate = eventModel.StartDate,
+                    EndDate = eventModel.EndDate,
+                    Location = eventModel.Location,
+                    Price = eventModel.Price,
+                    Capacity = eventModel.Capacity,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+                await _eventRepository.AddAsync(CreatedEvent);
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Failed to create event.");
+            return View(eventModel);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Event_Booking_System.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
 
 namespace Areeb.DAL.Data.Seeds
 {
@@ -104,7 +105,7 @@ namespace Areeb.DAL.Data.Seeds
             {
                 adminUser = new IdentityUser
                 {
-                    UserName = adminEmail,
+                    UserName = new MailAddress(adminEmail).User,
                     Email = adminEmail,
                     EmailConfirmed = true
                 };
