@@ -1,17 +1,22 @@
-﻿using Areeb.DAL;
+﻿using Areeb.BLL.DTOs;
+using Areeb.BLL.Services.EventService;
+using Areeb.DAL;
 using Areeb.DAL.Entities;
 using Areeb.DAL.Repositories.Interfaces;
 using Event_Booking_System.Models;
+using LinkDev.IKEA.BLL.Common.Services.Attachments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Event_Booking_System.Controllers
 {
-    public class EventController(IGenericRepository<Event> _eventRepository , IGenericRepository<Booking> _bookingRepository) : Controller
+    public class EventController(IEventService _eventService, IGenericRepository<Booking> _bookingRepository) : Controller
     {
         public async Task<IActionResult> Index()
         {
-            var events = await _eventRepository.GetAllAsync();
+            var events = await _eventService.GetAllEventsAsync();
 
             var userBookings = await _bookingRepository.GetAllAsync();
             userBookings = userBookings.Where(b => b.CustomerName == User.Identity!.Name).ToList();
@@ -29,7 +34,8 @@ namespace Event_Booking_System.Controllers
                     BookingId = (userBooking?.Id) ?? 0, 
                     Price = e.Price,
                     StartDate = e.StartDate,
-                    TicketsAvailable = e.TicketsAvailable
+                    TicketsAvailable = e.TicketsAvailable,
+                    ImageUrl = e.ImageUrl,
                 };
             }).ToList();
 
@@ -38,7 +44,7 @@ namespace Event_Booking_System.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var eventDetails = await _eventRepository.GetByIdAsync(id);
+            var eventDetails = await _eventService.GetEventByIdAsync(id);
             if (eventDetails == null)
                 return NotFound();
 
@@ -56,7 +62,7 @@ namespace Event_Booking_System.Controllers
         {
             if (ModelState.IsValid)
             {
-                Event CreatedEvent = new()
+                var eventDto = new CreatedEventDTO
                 {
                     Name = eventModel.Name,
                     Description = eventModel.Description,
@@ -65,10 +71,12 @@ namespace Event_Booking_System.Controllers
                     Location = eventModel.Location,
                     Price = eventModel.Price,
                     Capacity = eventModel.Capacity,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
+                    Category = eventModel.Category,
+                    Image = eventModel.Image,
+
                 };
-                await _eventRepository.AddAsync(CreatedEvent);
+
+                await _eventService.CreateEventAsync(eventDto);
                 return RedirectToAction("Index");
             }
 
