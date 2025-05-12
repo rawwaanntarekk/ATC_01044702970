@@ -19,7 +19,18 @@
             @foreach (var eventItem in Model)
             {
                 <div class="col">
-                    <div class="card h-100 shadow-sm">
+                    <div class="card h-100 shadow-sm" >
+
+                        <div class="card-header p-0" style="height:130px; overflow:hidden">
+                            <img src="@Url.Content(string.IsNullOrEmpty(eventItem.ImageUrl) ? "/images/default.jpg" : eventItem.ImageUrl)"
+                                 class="card-img-top w-100 h-100 object-fit-cover"   style="height:100px;"
+                                 alt="Event Image" />
+                        </div>
+                        
+
+
+
+
                         <div class="card-body">
                             <h5 class="card-title">@eventItem.Name</h5>
                             <p class="card-text text-muted mb-1">
