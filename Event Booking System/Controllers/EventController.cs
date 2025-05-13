@@ -23,7 +23,7 @@ namespace Event_Booking_System.Controllers
 
             var eventViewModels = events.Select(e =>
             {
-                var userBooking = userBookings.FirstOrDefault(b => b.EventId == e.Id );
+                var userBooking = userBookings.FirstOrDefault(b => b.EventId == e.Id);
 
                 return new EventViewModel
                 {
@@ -31,7 +31,7 @@ namespace Event_Booking_System.Controllers
                     Name = e.Name,
                     Location = e.Location,
                     IsBookedByUser = userBooking != null,
-                    BookingId = (userBooking?.Id) ?? 0, 
+                    BookingId = (userBooking?.Id) ?? 0,
                     Price = e.Price,
                     StartDate = e.StartDate,
                     TicketsAvailable = e.TicketsAvailable,
@@ -82,6 +82,72 @@ namespace Event_Booking_System.Controllers
 
             ModelState.AddModelError("", "Failed to create event.");
             return View(eventModel);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var eventDetails = await _eventService.GetEventByIdAsync(id);
+            if (eventDetails == null)
+                return NotFound();
+            var eventModel = new CreateEventViewModel
+            {
+                Name = eventDetails.Name,
+                Description = eventDetails.Description,
+                StartDate = eventDetails.StartDate,
+                EndDate = eventDetails.EndDate,
+                Location = eventDetails.Location,
+                Price = eventDetails.Price,
+                Capacity = eventDetails.Capacity,
+                Category = eventDetails.Category,
+
+
+            };
+            return View(eventModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CreateEventViewModel eventModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var eventDetails = await _eventService.GetEventByIdAsync(id);
+                if (eventDetails == null)
+                    return NotFound();
+
+                eventDetails.Name = eventModel.Name;
+                eventDetails.Description = eventModel.Description;
+                eventDetails.StartDate = eventModel.StartDate;
+                eventDetails.EndDate = eventModel.EndDate;
+                eventDetails.Location = eventModel.Location;
+                eventDetails.Price = eventModel.Price;
+                eventDetails.Capacity = eventModel.Capacity;
+                eventDetails.Category = eventModel.Category;
+
+                _eventService.UpdateEvent(eventDetails);
+
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", "Failed to update event.");
+            return View(eventModel);
+        }
+
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var eventDetails = await _eventService.GetEventByIdAsync(id);
+            if (eventDetails == null)
+                return NotFound();
+            return View(eventDetails);
+        }
+
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var eventDetails = await _eventService.GetEventByIdAsync(id);
+            if (eventDetails == null)
+                return NotFound();
+            _eventService.DeleteEvent(id);
+            return RedirectToAction("Index");
+
         }
     }
 }

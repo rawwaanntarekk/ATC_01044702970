@@ -26,12 +26,14 @@ namespace Areeb.DAL.Repositories.Implementations
         {
             var existingEvent = _applicationDbContext.Events.FirstOrDefault(e => e.Id == applicationEvent.Id) ?? throw new Exception($"Event with ID {applicationEvent.Id} not found.");
             _applicationDbContext.Update(applicationEvent);
+            _applicationDbContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var eventEntity = _applicationDbContext.Events.FirstOrDefault(e => e.Id == id) ?? throw new Exception($"Event with ID {id} not found.");
             _applicationDbContext.Events.Remove(eventEntity);
+            _applicationDbContext.SaveChanges();
         }
 
        
