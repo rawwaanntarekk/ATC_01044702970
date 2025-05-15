@@ -29,3 +29,7 @@ tr {
 td {
     vertical-align: middle;
 }
+
+.nav-auth_btn:hover {
+    color: #fff !important;
+}

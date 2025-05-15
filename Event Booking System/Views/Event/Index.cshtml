@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<EventViewModel>
 @{
     ViewData["Title"] = "Index";
+    var isAdmin = ViewData["isAdmin"] as bool? ?? false;
+    Layout = isAdmin ? "_IdentityLayout" : "_Layout";
+
 }
 
 <h1 class="text-center">All Events</h1>
