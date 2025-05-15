@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     var isAdmin = ViewData["isAdmin"] as bool? ?? false;
+    Layout = isAdmin ? "_IdentityLayout" : "_Layout";
 
 }
 
