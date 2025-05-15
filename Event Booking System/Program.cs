@@ -1,4 +1,5 @@
 using Areeb.BLL;
+using Areeb.BLL.Services.EventService;
 using Areeb.BLL.Services.Mail;
 using Areeb.DAL;
 using Areeb.DAL.Data.Seeds;
@@ -6,6 +7,7 @@ using Areeb.DAL.Entities;
 using Areeb.DAL.Repositories.Implementations;
 using Areeb.DAL.Repositories.Interfaces;
 using Event_Booking_System.Data;
+using LinkDev.IKEA.BLL.Common.Services.Attachments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,8 +38,12 @@ namespace Event_Booking_System
             builder.Services.AddScoped<IBookingService , BookingService>();
             builder.Services.AddScoped<BookingMailService>();
             builder.Services.AddScoped<EmailTemplateService>();
+            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+            builder.Services.AddScoped<IEventService, EventService>();
 
-            
+
+
+
             // Register Configuration service
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
