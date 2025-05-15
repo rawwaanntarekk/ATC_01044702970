@@ -5,71 +5,15 @@
 
 <body>
     <h2>Create Event</h2>
-    <form asp-action="Create">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label asp-for="Name"></label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label asp-for="Capacity"></label>
-                        <input asp-for="Capacity" class="form-control" />
-                        <span asp-validation-for="Capacity" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label asp-for="StartDate"></label>
-                        <input asp-for="StartDate" class="form-control" />
-                        <span asp-validation-for="StartDate" class="text-danger"></span>
-                    </div>
-
-                </div>
-
-
-
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label asp-for="Price"></label>
-                        <input asp-for="Price" class="form-control" />
-                        <span asp-validation-for="Price" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label asp-for="Location"></label>
-                        <input asp-for="Location" class="form-control" />
-                        <span asp-validation-for="Location" class="text-danger"></span>
-                    </div>
-
-
-
-                    <div class="form-group mb-3">
-                        <label asp-for="EndDate"></label>
-                        <input asp-for="EndDate" class="form-control" />
-                        <span asp-validation-for="EndDate" class="text-danger"></span>
-                    </div>
-
-
-                </div>
-
-                <div class="col-md-12">
-                    <div class="form-group mb-3">
-                        <label asp-for="Description"></label>
-                        <textarea asp-for="Description" class="form-control" style="height: 40px;"></textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </div>
-            </div>
-        </div>
+    <form asp-action="Create" enctype="multipart/form-data">
+        <partial name="_CreateUpdatePartialView" model="Model" />
     </form>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>

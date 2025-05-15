@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Areeb.DAL.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace Event_Booking_System.Models
 {
@@ -16,6 +18,13 @@ namespace Event_Booking_System.Models
         public decimal Price { get; set; }
         [Range(1, 1000, ErrorMessage = "Capacity must be between 1 and 1,000.")]
         public int Capacity { get; set; }
-    
+
+        [Display(Name = "Category")]
+        public Category Category { get; set; }
+
+
+
+        public IFormFile? Image { get; set; }
+
     }
 }
