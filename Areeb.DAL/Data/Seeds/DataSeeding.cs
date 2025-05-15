@@ -2,6 +2,7 @@
 using Event_Booking_System.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
 
 namespace Areeb.DAL.Data.Seeds
 {
@@ -37,8 +38,9 @@ namespace Areeb.DAL.Data.Seeds
                         StartDate = DateTime.Now.AddDays(30),
                         EndDate = DateTime.Now.AddDays(30).AddHours(3),
                         Location = "City Stadium",
+                        Category = Category.Sport,
                         Price = 50.00m,
-                        Capacity = 1000
+                        Capacity = 1000,
                     },
                     new() {
                         Name = "Art Exhibition",
@@ -46,8 +48,10 @@ namespace Areeb.DAL.Data.Seeds
                         StartDate = DateTime.Now.AddDays(60),
                         EndDate = DateTime.Now.AddDays(60).AddHours(5),
                         Location = "Art Gallery",
+                        Category = Category.Art,
                         Price = 20.00m,
-                        Capacity = 500
+                        Capacity = 500,
+
                     },
                     new() {
                         Name = "Tech Conference",
@@ -55,8 +59,10 @@ namespace Areeb.DAL.Data.Seeds
                         StartDate = DateTime.Now.AddDays(90),
                         EndDate = DateTime.Now.AddDays(90).AddHours(8),
                         Location = "Convention Center",
+                        Category = Category.Conference,
                         Price = 150.00m,
-                        Capacity = 2000
+                        Capacity = 2000,
+
                     },
                     new() {
                         Name = "Food Festival",
@@ -64,8 +70,10 @@ namespace Areeb.DAL.Data.Seeds
                         StartDate = DateTime.Now.AddDays(120),
                         EndDate = DateTime.Now.AddDays(120).AddHours(6),
                         Location = "City Park",
+                        Category = Category.Food,
                         Price = 10.00m,
-                        Capacity = 3000
+                        Capacity = 3000,
+
                     },
                     new() {
                         Name = "Charity Run",
@@ -73,8 +81,10 @@ namespace Areeb.DAL.Data.Seeds
                         StartDate = DateTime.Now.AddDays(150),
                         EndDate = DateTime.Now.AddDays(150).AddHours(4),
                         Location = "Downtown",
+                        Category = Category.Sport,
                         Price = 25.00m,
-                        Capacity = 800
+                        Capacity = 800,
+
                     }
 
                 };
@@ -104,7 +114,7 @@ namespace Areeb.DAL.Data.Seeds
             {
                 adminUser = new IdentityUser
                 {
-                    UserName = adminEmail,
+                    UserName = new MailAddress(adminEmail).User,
                     Email = adminEmail,
                     EmailConfirmed = true
                 };

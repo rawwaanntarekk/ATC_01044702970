@@ -1,0 +1,18 @@
+﻿@model CreateEventViewModel
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<body>
+    <h2>Edit @Model.Name</h2>
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <partial name="_CreateUpdatePartialView" model="Model" />
+    </form>
+
+    <div class="container py-2 m-auto">
+        <a class="btn btn-warning px-3 py-2" asp-action="Edit"> Edit</a>
+        <a class="btn btn-dark px-3 py-2" asp-action="Index"> Back To List</a>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
