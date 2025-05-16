@@ -12,6 +12,6 @@ namespace Areeb.BLL
         public Task Book(int eventId, string username, int quantity);
         public Task CancelBooking(int bookingId);
         public Task<Booking> GetBookingById(int bookingId);
-        public Task<List<Booking>> GetBookingsByUser(string username);
+        public Task<IEnumerable<Booking>> GetBookingsByUser(string username);
     }
 }
