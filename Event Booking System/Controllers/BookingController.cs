@@ -18,9 +18,22 @@ public class BookingController : Controller
         _bookingService = bookingService;
     }
 
+    
+
+    public async Task<IActionResult> Index()
+    {
+        var username = User?.Identity?.Name;
+
+        var UserBookings =await _bookingService.GetBookingsByUser(User?.Identity?.Name);
+        return View(UserBookings);
+    }
+    
+    
+    
     [HttpGet]
     public async Task<IActionResult> Create(int id)
     {
+
         var eventEntity = await _eventRepository.GetByIdAsync(id);
         if (eventEntity == null)
         {

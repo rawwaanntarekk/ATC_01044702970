@@ -62,9 +62,12 @@ namespace Areeb.BLL
         }
 
 
-        public Task<List<Booking>> GetBookingsByUser(string username)
+        public async Task<IEnumerable<Booking>> GetBookingsByUser(string username)
         {
-            throw new NotImplementedException();
+            var UserBookings = await _bookingRepository.GetAllAsync();
+            UserBookings = UserBookings.Where(b => b.CustomerName == username).ToList();
+
+            return UserBookings;
         }
     }
 }
