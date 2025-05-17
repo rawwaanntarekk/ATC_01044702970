@@ -1,4 +1,13 @@
+using Areeb.BLL;
+using Areeb.BLL.Services.EventService;
+using Areeb.BLL.Services.Mail;
+using Areeb.DAL;
+using Areeb.DAL.Data.Seeds;
+using Areeb.DAL.Entities;
+using Areeb.DAL.Repositories.Implementations;
+using Areeb.DAL.Repositories.Interfaces;
 using Event_Booking_System.Data;
+using LinkDev.IKEA.BLL.Common.Services.Attachments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,11 +25,36 @@ namespace Event_Booking_System
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI();
+
+            builder.Services.AddRazorPages();
+
+            builder.Services.AddScoped<DataSeeding>();
+            builder.Services.AddScoped<EventRepository>();
+            builder.Services.AddScoped<IGenericRepository<Event>, EventRepository>();
+            builder.Services.AddScoped<IGenericRepository<Booking>, BookingRepository>();
+            builder.Services.AddScoped<IBookingService , BookingService>();
+            builder.Services.AddScoped<BookingMailService>();
+            builder.Services.AddScoped<EmailTemplateService>();
+            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+            builder.Services.AddScoped<IEventService, EventService>();
+
+
+
+
+            // Register Configuration service
+            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            // Injecting the DataSeeding class to seed the database
+            var scope = app.Services.CreateScope();
+            var DataSeedObject = scope.ServiceProvider.GetRequiredService<DataSeeding>();
+            DataSeedObject.SeedData();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -40,6 +74,24 @@ namespace Event_Booking_System
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/" && !context.User.Identity!.IsAuthenticated)
+                {
+                    context.Response.Redirect("/Identity/Account/Login");
+                    return;
+                }
+                else if (context.Request.Path == "/" && context.User.Identity!.IsAuthenticated)
+                {
+                    context.Response.Redirect("/Home/Index");
+                    return;
+                }
+
+                await next();
+            });
+
+
 
             app.MapControllerRoute(
                 name: "default",
