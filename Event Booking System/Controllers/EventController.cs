@@ -84,6 +84,7 @@ namespace Event_Booking_System.Controllers
             return View(eventModel);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var eventDetails = await _eventService.GetEventByIdAsync(id);
