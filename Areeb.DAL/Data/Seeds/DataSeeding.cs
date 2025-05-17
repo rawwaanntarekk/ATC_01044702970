@@ -21,9 +21,7 @@ namespace Areeb.DAL.Data.Seeds
             }
 
 
-            //_applicationDbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Events', RESEED, 0)");
-            //_applicationDbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Bookings', RESEED, 0)");
-
+            
             if (!_applicationDbContext.Events.Any())
             {
                 var events = new List<Event>
