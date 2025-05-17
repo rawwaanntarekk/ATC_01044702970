@@ -84,6 +84,7 @@ namespace Event_Booking_System.Controllers
             return View(eventModel);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var eventDetails = await _eventService.GetEventByIdAsync(id);
@@ -145,6 +146,17 @@ namespace Event_Booking_System.Controllers
             var eventDetails = await _eventService.GetEventByIdAsync(id);
             if (eventDetails == null)
                 return NotFound();
+
+            // Checking if the event have image
+            if (eventDetails.ImageUrl != null)
+            {
+                // Delete the image from the server
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", eventDetails.ImageUrl);
+                if (System.IO.File.Exists(filePath))
+                    System.IO.File.Delete(filePath);
+            }
+
+
             _eventService.DeleteEvent(id);
             return RedirectToAction("Index");
 
