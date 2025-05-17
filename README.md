@@ -1,4 +1,4 @@
-![Watch the video](https://raw.githubusercontent.com/rawwaanntarekk/Areeb.Event-Booking-System/master/Demo.mp4)
+![Watch the video](https://raw.githubusercontent.com/rawwaanntarekk/Areeb.Event-Booking-System/Dev/Demo.mp4)
 
 # Event Booking System
 
