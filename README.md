@@ -132,6 +132,40 @@ Note: When using Package Manager Console, ensure you have the following NuGet pa
 - Microsoft.EntityFrameworkCore.Tools
 - Microsoft.EntityFrameworkCore.Design
 
+  ## Email Sending Configuration
+
+The system uses MailKit for sending emails. Here's how to configure email settings:
+
+1. **Update appsettings.json**
+```json
+{
+  "EmailSettings": {
+    "Mail": "your-email@gmail.com",
+    "DisplayName": "Event Booking System",
+    "Password": "your-app-password",
+    "Host": "smtp.gmail.com",
+    "Port": 587
+  }
+}
+```
+
+2. **Email Templates**
+The system includes the following email templates in `Areeb.BLL/EmailTemplates/`:
+- Booking Confirmation
+- Event Reminder
+- Password Reset
+- Welcome Email
+
+3. **Gmail Configuration**
+If using Gmail:
+- Enable 2-Step Verification in your Google Account
+- Generate an App Password:
+  1. Go to Google Account Settings
+  2. Security
+  3. 2-Step Verification
+  4. App Passwords
+  5. Generate a new app password for "Mail"
+
 
 ## Features
 - User Authentication and Authorization
