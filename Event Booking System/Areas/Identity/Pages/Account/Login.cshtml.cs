@@ -119,6 +119,16 @@ namespace Event_Booking_System.Areas.Identity.Pages.Account
 
                 // Holding the user to assign to him/her the role
                 var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                // If the user is not found by email nor username
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User is not found.");
+                    return Page();
+                }
+                
+
+
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
